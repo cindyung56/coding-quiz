@@ -52,7 +52,31 @@ var questionsArray = [
         choices: ["x[0]", "x[-1]", "x[x.length]", "x[x.length - 1]"],
         correctAnswer: "x[x.length - 1]" 
     },
-
+    {
+        question: "What represents an array in JavaScript?",
+        choices: ["' '", "{ }", "< >", "[ ]"],
+        correctAnswer: "[ ]" 
+    },
+    {
+        question: "Which heading tag is considered the most important on a webpage?",
+        choices: ["h1", "h2", "h3", "h4"],
+        correctAnswer: "h1" 
+    },
+    {
+        question: "Which of the following is NOT a pseudo-class?",
+        choices: [":visited", ":hover", ":active", "::after"],
+        correctAnswer: "::after" 
+    },
+    {
+        question: "What is the equivalent of hover in JavaScript?",
+        choices: ["dblclick", "click", "mouseout", "mouseover"],
+        correctAnswer: "mouseover" 
+    },
+    {
+        question: "Can you style elements in HTML without using a style.css file?",
+        choices: ["Yes", "No", "Maybe", "I don't know"],
+        correctAnswer: "Yes" 
+    },
 ]
 
 var secondsLeft = 75;
