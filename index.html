@@ -7,10 +7,12 @@
 </head>
 
 <body>
+    <!-- area to view high scores and see the timer -->
     <header> 
         <div>
             <p><a id="high-score-link">View High Scores</a></p>
         </div>
+        <!-- this div appears whenever the "View High Scores" link is hovered over -->
         <div id="high-score-window" data-state="hidden">
             <h3>High Scores</h3>
             <ul id="high-score-window-list">
@@ -18,21 +20,25 @@
             </ul>
         </div>
         
+        <!-- shows remaining time left when a round has been started -->
         <div>
             <p><span id="question-timer"></span></p>
         </div>
     </header>
 
     <main>
+        <!-- area to show instructions upon initial load -->
         <div class="center-text" id="text-container">
             <h2 id="page-heading" data-state="visible"></h2>
             <p id="instructions" data-state="visible">Instructions: Try to answer as many problems as possible within the time limit. You can log your high score at the end. Good luck!</p> 
             <button id="start-button" data-state="visible">Start Game</button>
 
+            <!-- area for the multiple choice options with each question -->
             <div id="question-container" data-state="visible">
                 <ul id="answer-options"></ul>
             </div>
 
+            <!-- allows user to input their high score with their initials -->
             <div id="enter-high-score" data-state="visible">
                 <p>Your score was: <span id="current-score"></span></p>
                 <form>
@@ -42,8 +48,10 @@
                 </form>
             </div>
             
+            <!-- area to show whether or not a previously answered question was correct or incorrect -->
             <p id="right-or-wrong"></p>
 
+            <!-- area to show high scores and options to go back or clear scores -->
             <div id="leaderboard" data-state="visible">
                 <ul id="list-of-players">
                 </ul>

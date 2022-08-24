@@ -1,3 +1,5 @@
+/* Universal Selectors */
+
 *{
     font-size: 20px;
 }
@@ -9,6 +11,9 @@
 *[data-state="visible"]{
     display: block;
 }
+
+
+/* Element Selectors */
 
 ul{
     padding: 0;
@@ -29,18 +34,16 @@ h2{
     font-size: 150%;
 }
 
-#question-container li{
-    list-style: none;
-    margin: 10px 0;
+a, button{
+    cursor: pointer;
 }
+
+
+/* Class Selectors */
 
 .player-scores{
     margin-bottom: 10px;
     color: teal;
-}
-
-a, button{
-    cursor: pointer;
 }
 
 .center-text{
@@ -55,6 +58,20 @@ a, button{
     cursor: pointer;
     border-radius: 10px;
     /* display: block; */
+}
+
+button:hover, .multiple-choice:hover{
+    background-color: teal;
+    color: white;
+    box-shadow: 0.3em 0.3em 0.3em gray;
+}
+
+
+/* ID Selectors */
+
+#question-container li{
+    list-style: none;
+    margin: 10px 0;
 }
 
 #high-score-link{
@@ -90,12 +107,6 @@ a, button{
 #submit-score{
     background-color: teal;
     color: white;
-}
-
-button:hover, .multiple-choice:hover{
-    background-color: teal;
-    color: white;
-    box-shadow: 0.3em 0.3em 0.3em gray;
 }
 
 #right-or-wrong{
