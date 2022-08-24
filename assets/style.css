@@ -1,0 +1,63 @@
+*{
+    font-size: 20px;
+}
+
+header{
+    padding: 10px;
+    margin: 0 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+h2{
+    font-size: 150%;
+}
+
+li{
+    list-style: none;
+    margin: 10px 0;
+}
+
+a, button{
+    cursor: pointer;
+}
+
+.center-text{
+    text-align: center;
+}
+
+.multiple-choice{
+    background-color: darkblue;
+    color: white;
+    padding: 15px;
+    width: 30%;
+    cursor: pointer;
+    border-radius: 10px;
+    /* display: block; */
+}
+
+#high-score-link{
+    color: teal;
+}
+
+#welcome-message{
+    margin: 0 auto;
+}
+
+#start-button{
+    padding: 15px;
+    background-color: darkblue;
+    color: white;
+    border-radius: 5px;
+}
+
+#start-button:hover, .multiple-choice:hover{
+    background-color: teal;
+    color: white;
+    box-shadow: 0.3em 0.3em 0.3em gray;
+}
+
+#right-or-wrong{
+    margin-top: 20px;
+    color: gray;
+}
