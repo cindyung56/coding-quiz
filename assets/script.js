@@ -58,8 +58,9 @@ var currentQuestion = questionsArray[questionIndex];
 
 // load page on refresh
 function init(){
-    questionContainer.setAttribute("style", "display: none");
-    highScoreInput.setAttribute("style", "display: none");
+    questionContainer.dataset.state = "hidden";
+    highScoreInput.dataset.state = "hidden";
+
     getScores();
 }
 
@@ -75,10 +76,10 @@ function getScores(){
 // when start button has been pressed, hide all initialized content and start the game
 function startBtnPressed(){
     questionTimer.textContent = secondsLeft + " seconds left";
-    questionContainer.setAttribute("style", "display: contents");
-
-    instructionsEl.setAttribute("style", "display: none");
-    startBtn.setAttribute("style", "display: none");
+    questionContainer.dataset.state = "visible";
+    
+    instructionsEl.dataset.state = "hidden";
+    startBtn.dataset.state = "hidden";
 
     setTimer();
     createQuestion();
@@ -170,8 +171,9 @@ function rightWrongCounter(){
 function endScreen(){
     pageHeading.textContent = "All done!";
     currentScore.textContent = winCounter + " points";
-    questionContainer.setAttribute("style", "display: none");
-    highScoreInput.setAttribute("style", "display: contents");
+    questionContainer.dataset.state = "hidden";
+    highScoreInput.dataset.state = "visible";
+
 }
 
 // when the user submits their initials and score to the leaderboard
