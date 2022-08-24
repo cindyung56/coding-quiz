@@ -1,3 +1,5 @@
+// VARIABLES 
+
 var highScoreLink = document.querySelector("#high-score-link");
 var questionTimer = document.querySelector("#question-timer");
 var textContainer = document.querySelector("#text-container");
@@ -11,6 +13,9 @@ var highScoreInput = document.querySelector("#enter-high-score");
 var currentScore = document.querySelector("#current-score");
 var submitScoreBtn = document.querySelector("#submit-score");
 var userInitials = document.querySelector("#user-initials");
+var scoreLeaderboard = document.querySelector("#leaderboard");
+var listOfPlayers = document.querySelector("#list-of-players");
+var playAgainBtn = document.querySelector("#play-again-btn");
 
 var questionsArray = [
     {
@@ -46,7 +51,7 @@ var questionsArray = [
 
 ]
 
-var secondsLeft = 10;
+var secondsLeft = 75;
 var rwSeconds = 3;
 var winCounter = 0;
 var isQuestionCorrect;
@@ -60,7 +65,7 @@ var currentQuestion = questionsArray[questionIndex];
 function init(){
     questionContainer.dataset.state = "hidden";
     highScoreInput.dataset.state = "hidden";
-
+    scoreLeaderboard.dataset.state = "hidden";
     getScores();
 }
 
@@ -130,9 +135,6 @@ function checkIfCorrect(){
     
 }
 
-
-
-
 // create code for the timer to count down
 function setTimer(){
     var timerInterval = setInterval(function(){
@@ -154,14 +156,15 @@ function setTimer(){
     }, 1000);
 }
 
+// allow the correct or wrong message to display for 3 seconds, and then reset it back for the next problem
 function rightWrongCounter(){
     var timerInterval = setInterval(function(){
         rwSeconds--;
         
         if (rwSeconds === 0){
             clearInterval(timerInterval);
-            rwSeconds = 3;
             rightOrWrong.textContent = "";
+            rwSeconds = 3;
             return;
         }
     }, 1000);
@@ -173,32 +176,70 @@ function endScreen(){
     currentScore.textContent = winCounter + " points";
     questionContainer.dataset.state = "hidden";
     highScoreInput.dataset.state = "visible";
-
 }
 
 // when the user submits their initials and score to the leaderboard
 function submitBtnPressed(event){
     event.preventDefault();
-    var scoreArray = JSON.parse(localStorage.getItem("scores"));
+    console.log(userInitials.value);
+    if (userInitials.value !== ""){
+        var scoreArray = JSON.parse(localStorage.getItem("scores"));
     
-    var user = {
-        initials: userInitials.value.trim(),
-        score: winCounter
-    }
-    scoreArray.push(user);
+        var user = {
+            initials: userInitials.value.trim(),
+            score: winCounter
+        }
+        scoreArray.push(user);
 
-    localStorage.setItem("scores", JSON.stringify(scoreArray));
-    displayHighScores();
+        localStorage.setItem("scores", JSON.stringify(scoreArray));
+        displayHighScores();
+    } else{
+        rightOrWrong.textContent = "Must enter your initials before you submit!";
+        rightWrongCounter();
+    }
+    
 }
 
 // function to show scores after initials have been submitted
 function displayHighScores(){
-    
+    highScoreInput.dataset.state = "hidden";
+    scoreLeaderboard.dataset.state = "visible";
+    var scoreArray = JSON.parse(localStorage.getItem("scores"));
+
+    scoreArray.sort(function(a, b){
+        return b.score - a.score;
+    });
+
+    listOfPlayers.innerHTML = "";
+
+    for (var i = 0; i < scoreArray.length; i++){
+        var player = document.createElement("li");
+        player.setAttribute("class", "player-scores");
+        player.textContent = "#"+ (i+1) + " " + scoreArray[i].initials + ": " + scoreArray[i].score + " points";
+        listOfPlayers.appendChild(player);
+    }
+
+}
+
+// reset everything necessary when the user decides to do the quiz again
+function playAgain(){
+    highScoreInput.dataset.state = "hidden";
+    scoreLeaderboard.dataset.state = "hidden";
+    winCounter = 0;
+    secondsLeft = 75;
+    questionIndex = 0;
+    answeredQuestions = 0;
+    currentQuestion = questionsArray[questionIndex];
+    answerOptionList.innerHTML = "";
+    userInitials.value = "";
+    startBtnPressed();
 }
 
 
+// when the start button is pressed, run the startBtnPressed function
 startBtn.addEventListener("click", startBtnPressed);
 
+// when an answer has been pressed, check to see if it matches the correct answer
 questionContainer.addEventListener("click", function(event){
     event.stopPropagation();
     var element = event.target;
@@ -213,7 +254,11 @@ questionContainer.addEventListener("click", function(event){
     }
 });
 
+// when the submit button has been pressed, add the score to the leaderboard
 submitScoreBtn.addEventListener("click", submitBtnPressed);
+
+// when the user decides to play again
+playAgainBtn.addEventListener("click", playAgain);
 
 
 init();

@@ -7,7 +7,11 @@
 }
 
 *[data-state="visible"]{
-    display: contents;
+    display: block;
+}
+
+ul{
+    padding: 0;
 }
 
 header{
@@ -21,9 +25,14 @@ h2{
     font-size: 150%;
 }
 
-li{
+#question-container li{
     list-style: none;
     margin: 10px 0;
+}
+
+.player-scores{
+    margin-bottom: 10px;
+    color: teal;
 }
 
 a, button{
@@ -52,14 +61,19 @@ a, button{
     margin: 0 auto;
 }
 
-#start-button{
+#start-button, #play-again-btn{
     padding: 15px;
     background-color: darkblue;
     color: white;
     border-radius: 5px;
 }
 
-#start-button:hover, .multiple-choice:hover{
+#submit-score{
+    background-color: teal;
+    color: white;
+}
+
+button:hover, .multiple-choice:hover{
     background-color: teal;
     color: white;
     box-shadow: 0.3em 0.3em 0.3em gray;

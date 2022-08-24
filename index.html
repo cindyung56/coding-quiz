@@ -12,6 +12,7 @@
             <p><a id="high-score-link" href="#">View High Scores</a></p>
         </div>
         
+        
         <div>
             <p><span id="question-timer"></span></p>
         </div>
@@ -19,15 +20,15 @@
 
     <main>
         <div class="center-text" id="text-container">
-            <h2 id="page-heading">Coding Quiz Challenge</h2>
-            <p id="instructions">Instructions: Try to answer as many problems as possible within the time limit. You can log your high score at the end. Good luck!</p> 
+            <h2 id="page-heading" data-state="visible">Coding Quiz Challenge</h2>
+            <p id="instructions" data-state="visible">Instructions: Try to answer as many problems as possible within the time limit. You can log your high score at the end. Good luck!</p> 
             <button id="start-button">Start Game</button>
 
-            <div id="question-container">
+            <div id="question-container" data-state="visible">
                 <ul id="answer-options"></ul>
             </div>
 
-            <div id="enter-high-score">
+            <div id="enter-high-score" data-state="visible">
                 <p>Your score was: <span id="current-score"></span></p>
                 <form>
                     <label>Enter your initials:</label>
@@ -37,6 +38,12 @@
             </div>
             
             <p id="right-or-wrong"></p>
+
+            <div id="leaderboard" data-state="visible">
+                <ul id="list-of-players">
+                </ul>
+                <button id="play-again-btn">Play Again</button>
+            </div>
         </div>        
         
 
