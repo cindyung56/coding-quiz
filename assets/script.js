@@ -1,6 +1,9 @@
 // VARIABLES 
 
 var highScoreLink = document.querySelector("#high-score-link");
+var highScoreWindow = document.querySelector("#high-score-window");
+var highScoreWindowList = document.querySelector("#high-score-window-list");
+
 var questionTimer = document.querySelector("#question-timer");
 var textContainer = document.querySelector("#text-container");
 var pageHeading = document.querySelector("#page-heading");
@@ -15,7 +18,8 @@ var submitScoreBtn = document.querySelector("#submit-score");
 var userInitials = document.querySelector("#user-initials");
 var scoreLeaderboard = document.querySelector("#leaderboard");
 var listOfPlayers = document.querySelector("#list-of-players");
-var playAgainBtn = document.querySelector("#play-again-btn");
+var goBackBtn = document.querySelector("#go-back-btn");
+var clearScoresBtn = document.querySelector("#clear-scores-btn");
 
 var questionsArray = [
     {
@@ -52,7 +56,7 @@ var questionsArray = [
 ]
 
 var secondsLeft = 75;
-var rwSeconds = 3;
+var rwSeconds = 2;
 var winCounter = 0;
 var isQuestionCorrect;
 var questionIndex = 0;
@@ -61,11 +65,14 @@ var currentQuestion = questionsArray[questionIndex];
 
 // FUNCTIONS
 
-// load page on refresh
+// load starting page on refresh/initial load/user decides to go back from finishing a round
 function init(){
     questionContainer.dataset.state = "hidden";
     highScoreInput.dataset.state = "hidden";
     scoreLeaderboard.dataset.state = "hidden";
+    pageHeading.textContent = "Coding Quiz Challenge";
+    instructionsEl.dataset.state = "visible";
+    startBtn.dataset.state = "visible";
     getScores();
 }
 
@@ -77,6 +84,20 @@ function getScores(){
         localStorage.setItem("scores", JSON.stringify(scoreArray));
     }
 }
+
+// display the high scores in highScoreWindow
+function updateHighScoreWindow(){
+    highScoreWindowList.innerHTML = "";
+
+    var scoreArray = JSON.parse(localStorage.getItem("scores"));
+    
+    for (var i = 0; i < scoreArray.length; i++){
+        var player = document.createElement("li");
+        player.textContent = "#"+ (i+1) + " " + scoreArray[i].initials + ": " + scoreArray[i].score + " points";
+        highScoreWindowList.appendChild(player);
+    }
+}
+
 
 // when start button has been pressed, hide all initialized content and start the game
 function startBtnPressed(){
@@ -111,6 +132,27 @@ function createQuestion(){
     }
 }
 
+// create code for the timer to count down
+function setTimer(){
+    var timerInterval = setInterval(function(){
+        secondsLeft--;
+
+        if (secondsLeft !== 1){
+            questionTimer.textContent = secondsLeft + " seconds left";
+        } else if (secondsLeft === 1){
+            questionTimer.textContent = secondsLeft + " second left";
+        }
+        
+        if (secondsLeft <= 0 || answeredQuestions === questionsArray.length){
+            secondsLeft = 0;
+            questionTimer.textContent = secondsLeft + " seconds left";
+            clearInterval(timerInterval);
+            endScreen();
+            return;
+        }
+    }, 1000);
+}
+
 
 //check to see if the chosen answer was correct
 function checkIfCorrect(){
@@ -132,28 +174,6 @@ function checkIfCorrect(){
         answerOptionList.innerHTML = "";
         createQuestion(); 
     }
-    
-}
-
-// create code for the timer to count down
-function setTimer(){
-    var timerInterval = setInterval(function(){
-        secondsLeft--;
-
-        if (secondsLeft !== 1){
-            questionTimer.textContent = secondsLeft + " seconds left";
-        } else if (secondsLeft === 1){
-            questionTimer.textContent = secondsLeft + " second left";
-        }
-        
-        if (secondsLeft <= 0 || answeredQuestions === questionsArray.length){
-            secondsLeft = 0;
-            questionTimer.textContent = secondsLeft + " seconds left";
-            clearInterval(timerInterval);
-            endScreen();
-            return;
-        }
-    }, 1000);
 }
 
 // allow the correct or wrong message to display for 3 seconds, and then reset it back for the next problem
@@ -197,7 +217,6 @@ function submitBtnPressed(event){
         rightOrWrong.textContent = "Must enter your initials before you submit!";
         rightWrongCounter();
     }
-    
 }
 
 // function to show scores after initials have been submitted
@@ -218,12 +237,10 @@ function displayHighScores(){
         player.textContent = "#"+ (i+1) + " " + scoreArray[i].initials + ": " + scoreArray[i].score + " points";
         listOfPlayers.appendChild(player);
     }
-
 }
 
 // reset everything necessary when the user decides to do the quiz again
-function playAgain(){
-    highScoreInput.dataset.state = "hidden";
+function goBack(){
     scoreLeaderboard.dataset.state = "hidden";
     winCounter = 0;
     secondsLeft = 75;
@@ -232,9 +249,18 @@ function playAgain(){
     currentQuestion = questionsArray[questionIndex];
     answerOptionList.innerHTML = "";
     userInitials.value = "";
-    startBtnPressed();
+    init();
 }
 
+
+function clearHighScores(){
+    var scoreArray = JSON.parse(localStorage.getItem("scores"));
+    scoreArray = [];
+    localStorage.setItem("scores", JSON.stringify(scoreArray));
+    displayHighScores();
+}
+
+// EVENT LISTENERS
 
 // when the start button is pressed, run the startBtnPressed function
 startBtn.addEventListener("click", startBtnPressed);
@@ -258,7 +284,17 @@ questionContainer.addEventListener("click", function(event){
 submitScoreBtn.addEventListener("click", submitBtnPressed);
 
 // when the user decides to play again
-playAgainBtn.addEventListener("click", playAgain);
+goBackBtn.addEventListener("click", goBack);
 
+// clear the list when the user wants to clear the scores, and update the list to be cleared
+clearScoresBtn.addEventListener("click", clearHighScores);
+
+highScoreLink.addEventListener("mouseover", function(event){
+    updateHighScoreWindow();
+    highScoreWindow.dataset.state = "visible";
+})
+highScoreLink.addEventListener("mouseout", function(event){
+    highScoreWindow.dataset.state = "hidden";
+})
 
 init();
