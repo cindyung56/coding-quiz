@@ -1,5 +1,6 @@
 // VARIABLES 
 
+// grabbing all elements of importance
 var highScoreLink = document.querySelector("#high-score-link");
 var highScoreWindow = document.querySelector("#high-score-window");
 var highScoreWindowList = document.querySelector("#high-score-window-list");
@@ -21,6 +22,7 @@ var listOfPlayers = document.querySelector("#list-of-players");
 var goBackBtn = document.querySelector("#go-back-btn");
 var clearScoresBtn = document.querySelector("#clear-scores-btn");
 
+// array of all the questions that appear when round has started
 var questionsArray = [
     {
         question: "What coding language represents the content of a web page?",
@@ -79,6 +81,7 @@ var questionsArray = [
     },
 ]
 
+// Global Variables
 var secondsLeft = 75;
 var rwSeconds = 2;
 var winCounter = 0;
@@ -86,6 +89,7 @@ var isQuestionCorrect;
 var questionIndex = 0;
 var answeredQuestions = 0;
 var currentQuestion = questionsArray[questionIndex];
+
 
 // FUNCTIONS
 
@@ -208,7 +212,7 @@ function rightWrongCounter(){
         if (rwSeconds === 0){
             clearInterval(timerInterval);
             rightOrWrong.textContent = "";
-            rwSeconds = 3;
+            rwSeconds = 2;
             return;
         }
     }, 1000);
@@ -276,13 +280,14 @@ function goBack(){
     init();
 }
 
-
+// clears high scores from local storage
 function clearHighScores(){
     var scoreArray = JSON.parse(localStorage.getItem("scores"));
     scoreArray = [];
     localStorage.setItem("scores", JSON.stringify(scoreArray));
     displayHighScores();
 }
+
 
 // EVENT LISTENERS
 
