@@ -26,4 +26,4 @@ The user can now see their score and compare it to others who have played. They 
 
 GitHub Repository Link: https://github.com/cindyung56/coding-quiz
 
-Link to Page: 
+Link to Page: https://cindyung56.github.io/coding-quiz/
