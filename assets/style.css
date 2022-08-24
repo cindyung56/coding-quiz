@@ -14,6 +14,10 @@ ul{
     padding: 0;
 }
 
+li{
+    list-style: none;
+}
+
 header{
     padding: 10px;
     margin: 0 10px;
@@ -57,15 +61,30 @@ a, button{
     color: teal;
 }
 
+#high-score-window{
+    background-color: rgb(237, 237, 237);
+    position: absolute;
+    top: 70px;
+    left: 20px;
+    padding: 0 10px;
+    width: 150px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
 #welcome-message{
     margin: 0 auto;
 }
 
-#start-button, #play-again-btn{
+#start-button, #go-back-btn, #clear-scores-btn{
     padding: 15px;
     background-color: darkblue;
     color: white;
     border-radius: 5px;
+}
+
+#start-button{
+    margin: 0 auto;
 }
 
 #submit-score{
